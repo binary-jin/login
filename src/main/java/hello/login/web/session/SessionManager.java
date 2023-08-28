@@ -32,7 +32,7 @@ public class SessionManager {
 
         //세션ID를 생성하고 값을 세션에 저장
         String sessionId = UUID.randomUUID().toString(); //이걸 사용하면 랜덤한 값을 얻을 수 있음
-        sessionStore.put(sessionId, value);
+        sessionStore.put(sessionId, value); //세션 저장소에 넘어온 세션 아이디와 value=member객체 자체를 넣어줌
 
         //쿠키 생성
         Cookie mySessionCookie = new Cookie(SESSION_COOKIE_NAME, sessionId);
@@ -45,10 +45,10 @@ public class SessionManager {
      */
     public Object getSession(HttpServletRequest request) {
         Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
-        if (sessionCookie == null) {
-            return  null;
+        if (sessionCookie == null) { //세션 쿠키가 null이면 null 반환
+            return null;
         }
-        return sessionStore.get(sessionCookie.getValue());
+        return sessionStore.get(sessionCookie.getValue()); //세션 저장소에서 세션 쿠키에 해당되는 값(멤버 객체)를 반환함
     }
 
     /**
@@ -56,20 +56,23 @@ public class SessionManager {
      *  세션 만료
      */
     public void expire(HttpServletRequest request) {
-        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME); //세션 쿠키를 가져옴
         if (sessionCookie != null) {
             sessionStore.remove(sessionCookie.getValue());
+            //세션 쿠키가 null이 아니면 세션 저장소에서 값을 다 지워버림
         }
     }
 
+    //쿠키를 찾는 로직을 별도로 관리
     public Cookie findCookie(HttpServletRequest request, String cookieName) {
         if (request.getCookies() == null) {
             return null;
         }
+        //쿠키를 찾아보고 없으면 Null을 반환
 
-        return Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(cookieName))
-                .findAny().orElse(null);
+        return Arrays.stream(request.getCookies()) //배열을 stream으로 바꿔줌
+                .filter(cookie -> cookie.getName().equals(cookieName)) //쿠키의 값이 넘어온 cookiename과 같은지 확인
+                .findAny().orElse(null); //있으면 쿠키를 반환, 없으면 null을 반환
 
     }
 

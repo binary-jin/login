@@ -45,7 +45,8 @@ public class LoginController {
 
         //쿠키에 시간 정보를 주지 않으면 세션 쿠키(브라우저 종료시 모두 종료)
         Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
-        response.addCookie(idCookie);
+        //new Cookie(name, value)에서 value에는 string이 들어가야해서 String으로 타입을 변환시켜줌
+        response.addCookie(idCookie); //응답에 쿠키를 넣어줌(HttpServletResponse에 쿠키를 추가해줌)
 
         return "redirect:/";
     }
@@ -90,6 +91,7 @@ public class LoginController {
         //getSession(true) ->  기본 값, 세션이 있으면 기존 세션을 반환, 세션이 없으면 새로운 세션 생성 반환
         //getSession(false) -> 세션 있으면 기존 세션 반환, 세션 없으면 새로운 세션 생성하지 않고 null 반환
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        //세션에 보관하고싶은 객체를 담아두면 됨
 
         //세션 관리자를 통해 세션을 생성하고 회원 데이터를 보관
         //sessionManager.createSession(loginMember, response);

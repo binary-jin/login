@@ -50,7 +50,7 @@ public class HomeController {
     //@GetMapping("/")
     public String homeLoginV2(HttpServletRequest request, Model model) {
 
-        //세션관리자에 저장된 회원정보 조회
+        //세션관리자에 저장된 회원정보 조회로 로그인 여부 확인
         Member member = (Member)sessionManager.getSession(request);
 
         //로그인
@@ -83,7 +83,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLoginV3Spring(
+    public String homeLoginV3Spring(//@SessionAttribute = session+attribute -> 세션에서 attribute로 한 번에 꺼냄
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
 
         //세션에 회원 데이터가 없으면 home으로 보냄
