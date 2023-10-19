@@ -46,8 +46,9 @@ public class LoginController {
 
         //쿠키에 시간 정보를 주지 않으면 세션 쿠키(브라우저 종료시 모두 종료)
         Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
+        //로그인이 성공하면 쿠키를 만들기 위해 쿠키 값(id)을 loginMember에서 가져와 쿠키를 생성하고 idCookie에 담음
         //new Cookie(name, value)에서 value에는 string이 들어가야해서 String으로 타입을 변환시켜줌
-        response.addCookie(idCookie); //응답에 쿠키를 넣어줌(HttpServletResponse에 쿠키를 추가해줌)
+        response.addCookie(idCookie); //response에 위에서 만든 쿠키를 넣어줌(HttpServletResponse에 쿠키를 추가해줌) -> 쿠키 이름은 memberId이고 값은 회원의 id
 
         return "redirect:/";
     }

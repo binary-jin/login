@@ -35,7 +35,8 @@ public class SessionManager {
         sessionStore.put(sessionId, value); //세션 저장소에 넘어온 세션 아이디와 value=member객체 자체를 넣어줌
 
         //쿠키 생성
-        Cookie mySessionCookie = new Cookie(SESSION_COOKIE_NAME, sessionId);
+        Cookie mySessionCookie = new Cookie(SESSION_COOKIE_NAME, sessionId); //mySessionId 편하게 사용하기 위해 상수로 만듬
+        //쿠키 이름은 mySessionId, 값은 랜덤 토큰(sessionId)을 넣어줌
         response.addCookie(mySessionCookie);
 
     }
